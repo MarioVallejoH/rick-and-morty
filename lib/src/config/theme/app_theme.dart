@@ -269,7 +269,7 @@ ThemeData globalTheme() {
     primaryColor: AppColors.primary_400,
     shadowColor: Colors.grey,
     sliderTheme: sliderThemeData(theme.sliderTheme),
-    scaffoldBackgroundColor: AppColors.background,
+    scaffoldBackgroundColor: AppColors.backgroundVariant,
     textTheme: globalTextTheme(theme.textTheme),
     dropdownMenuTheme: dropDownMenuThemeData(theme.dropdownMenuTheme),
     buttonTheme: buttonThemeData(theme.buttonTheme),

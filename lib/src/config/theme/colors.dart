@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 /// Class to get directly app Colors
 class AppColors {
   /// Background color
-  static const Color background = Color.fromARGB(255, 241, 241, 241);
+  static const Color background = Color(0xff201A31);
+
+  /// Background color variant
+  static const Color backgroundVariant = Color(0xff000022);
 
   /// Secondary color variant
   static const Color secondary_50 = Color(0xfffbfbfb);

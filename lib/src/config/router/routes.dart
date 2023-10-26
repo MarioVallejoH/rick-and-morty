@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rick_and_morty_app/src/presentation/views/home/main_screen.dart';
+import 'package:rick_and_morty_app/src/presentation/screens.dart';
 
 /// Class to manage app routes.
 class Routes {
