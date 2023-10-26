@@ -34,13 +34,4 @@ class Method {
 
   /// Http POST method
   static const String post = 'POST';
-
-  /// Http DELETE method
-  static const String delete = 'DELETE';
-
-  /// Http Update method
-  static const String update = 'UPDATE';
-
-  /// Http PUT method
-  static const String put = 'PUT';
 }
