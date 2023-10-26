@@ -6,7 +6,7 @@ import 'package:rick_and_morty_app/src/domain/entities/characters.dart';
 /// data
 abstract class CharactersGQLRepositoryI {
   /// Characters GQL query builder
-  String buildQuery(Map<String, dynamic>? filter);
+  String buildQuery({required page, required Map<String, dynamic> filter});
 
   /// Get characters data with optional filters
   Future<Characters> get({int page = 0, Map<String, dynamic>? filter});

@@ -12,7 +12,7 @@ class Episodes {
   factory Episodes.fromJson(Map<String, dynamic> json) => Episodes(
         info: Info.fromJson(json['info']),
         episodes: List<Episode>.from(
-          json['episodes'].map((x) => Episode.fromJson(x)),
+          json['results'].map((x) => Episode.fromJson(x)),
         ),
       );
 

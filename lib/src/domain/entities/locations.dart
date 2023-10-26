@@ -12,7 +12,7 @@ class Locations {
   factory Locations.fromJson(Map<String, dynamic> json) => Locations(
         info: Info.fromJson(json['info']),
         locations: List<Location>.from(
-          json['locations'].map((x) => Location.fromJson(x)),
+          json['results'].map((x) => Location.fromJson(x)),
         ),
       );
 

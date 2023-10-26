@@ -18,7 +18,7 @@ class Characters {
   factory Characters.fromJson(Map<String, dynamic> json) => Characters(
         info: Info.fromJson(json['info']),
         characters: List<Character>.from(
-          json['Characters'].map((x) => Character.fromJson(x)),
+          json['results'].map((x) => Character.fromJson(x)),
         ),
       );
 

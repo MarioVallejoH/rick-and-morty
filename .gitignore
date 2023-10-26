@@ -35,6 +35,9 @@ migrate_working_dir/
 # Symbolication related
 app.*.symbols
 
+# VScode launch.json related
+.vscode/launch.json
+
 # Obfuscation related
 app.*.map.json
 
