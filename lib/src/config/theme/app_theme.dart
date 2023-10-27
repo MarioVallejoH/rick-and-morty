@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:rick_and_morty_app/src/config/config.dart';
 import 'package:rick_and_morty_app/src/utils/constants/sizes.dart';
 
@@ -7,96 +8,82 @@ import 'package:rick_and_morty_app/src/utils/constants/sizes.dart';
 /// Class used to manage theme data on app.
 ThemeData globalTheme() {
   TextTheme globalTextTheme(TextTheme textTheme) {
+    /// TODO: Set text color with detail
     return textTheme.copyWith(
       headlineLarge: textTheme.headlineLarge?.copyWith(
-        fontFamily: 'GoldplayAlt',
         fontWeight: FontWeight.w700,
         fontSize: 40,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       headlineMedium: textTheme.headlineMedium?.copyWith(
-        fontFamily: 'GoldplayAlt',
         fontWeight: FontWeight.w700,
         fontSize: 32,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       headlineSmall: textTheme.headlineSmall?.copyWith(
-        fontFamily: 'GoldplayAlt',
         fontWeight: FontWeight.w700,
         fontSize: 24.0,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       displayLarge: textTheme.displayLarge?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w700,
         fontSize: 55.0,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       displayMedium: textTheme.displayMedium?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w600,
         fontSize: 16,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       displaySmall: textTheme.displaySmall?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w500,
         fontSize: 10.0,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       titleLarge: textTheme.titleLarge?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w700,
         fontSize: 55.0,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       titleMedium: textTheme.titleMedium?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w600,
         fontSize: 16,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       titleSmall: textTheme.titleSmall?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w500,
         fontSize: 14.0,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       labelLarge: textTheme.labelLarge?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w600,
         fontSize: 16.0,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       labelMedium: textTheme.labelMedium?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w600,
         fontSize: 16.0,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       labelSmall: textTheme.labelSmall?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w600,
         fontSize: 16.0,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       bodyLarge: textTheme.bodyLarge?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w500,
         fontSize: 16.0,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       bodyMedium: textTheme.bodyMedium?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w400,
         fontSize: 14.0,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       bodySmall: textTheme.bodySmall?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w400,
         fontSize: 10.0,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
     );
   }
@@ -108,10 +95,10 @@ ThemeData globalTheme() {
       inversePrimary: AppColors.primary_300,
       primaryContainer: AppColors.primary_200,
       outline: AppColors.primary_300,
-      secondary: const Color(0xff323231),
+      secondary: Colors.white,
       onSecondary: const Color(0xffFBFBFB),
       onPrimary: const Color(0xffEBF1FF),
-      tertiary: const Color(0xff323231),
+      tertiary: Colors.white,
       onTertiaryContainer: const Color(0xffD9DBD8),
       onPrimaryContainer: AppColors.primary_50,
       background: Colors.white,
@@ -201,28 +188,24 @@ ThemeData globalTheme() {
       ),
       alignLabelWithHint: true,
       labelStyle: theme.labelStyle?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w500,
         fontSize: 16.0,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       floatingLabelStyle: theme.labelStyle?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w500,
         fontSize: 16.0,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       errorStyle: theme.labelStyle?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w500,
         fontSize: 16.0,
         color: AppColors.danger_400,
       ),
       hintStyle: theme.labelStyle?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w500,
         fontSize: 16.0,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
     );
   }
@@ -240,16 +223,15 @@ ThemeData globalTheme() {
   ) {
     return bottomNavBarThemeData.copyWith(
       backgroundColor: Colors.white,
-      selectedItemColor: const Color(0xff323231),
+      selectedItemColor: Colors.white,
       unselectedItemColor: const Color(0xffE0DFE0),
       selectedLabelStyle: bottomNavBarThemeData.selectedLabelStyle?.copyWith(
-        fontFamily: 'Goldplay',
         fontWeight: FontWeight.w500,
         fontSize: 14.0,
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       selectedIconTheme: bottomNavBarThemeData.selectedIconTheme?.copyWith(
-        color: const Color(0xff323231),
+        color: Colors.white,
       ),
       unselectedIconTheme: bottomNavBarThemeData.unselectedIconTheme?.copyWith(
         color: const Color(0xffE0DFE0),
@@ -270,7 +252,11 @@ ThemeData globalTheme() {
     shadowColor: Colors.grey,
     sliderTheme: sliderThemeData(theme.sliderTheme),
     scaffoldBackgroundColor: AppColors.backgroundVariant,
-    textTheme: globalTextTheme(theme.textTheme),
+    textTheme: globalTextTheme(
+      GoogleFonts.latoTextTheme(
+        theme.textTheme,
+      ),
+    ),
     dropdownMenuTheme: dropDownMenuThemeData(theme.dropdownMenuTheme),
     buttonTheme: buttonThemeData(theme.buttonTheme),
     checkboxTheme: checkboxThemeData(theme.checkboxTheme),

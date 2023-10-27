@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rick_and_morty_app/src/config/config.dart';
 import 'package:rick_and_morty_app/src/presentation/state/home/home_provider.dart';
 import 'package:rick_and_morty_app/src/presentation/widgets/widgets.dart';
+import 'package:rick_and_morty_app/src/utils/utils/utils.dart';
 
 /// APP HomeScreen
 ///
@@ -17,7 +18,22 @@ class HomeScreen extends ConsumerWidget {
     return CustomScaffold(
       backgroundColor: AppColors.backgroundVariant,
       body: ref.watch(homeStateProvider).when(
-            data: (data) => FadeIn(child: const CustomScaffold()),
+            data: (data) => FadeIn(
+              child: CustomScaffold(
+                body: ColumnWithPadding(
+                  children: [
+                    const HeaderSpacer(),
+                    IconButton(
+                      color: Colors.white,
+                      onPressed: () {
+                        Navigation.goTo(Routes.episodes, context);
+                      },
+                      icon: const Icon(Icons.photo_album_outlined),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             error: (error, stackTrace) => ErrorWidget(error),
             loading: () => const LoadingScreen(),
           ),

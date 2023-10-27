@@ -5,19 +5,24 @@ import 'package:rick_and_morty_app/src/domain/repositories/episodes_gql_reposito
 
 /// Implementation episodes repo
 class EpisodesGQLRepository implements EpisodesGQLRepositoryI {
+  ///
+  EpisodesGQLRepository(this.api);
+
   @override
-  Future<Episodes> get({int page = 0, Map<String, dynamic>? filter}) async {
+  final ApiDataSource api;
+  @override
+  Future<Episodes> get({int page = 1, Map<String, dynamic>? filter}) async {
     final requestData = RequestData(
       path: '/graphql',
       queryParameters: {
         'query': buildQuery(page: page, filter: filter ?? {}),
       },
     );
-    final result = await ApiDataSource().request(
+    final result = await api.request(
       requestData: requestData,
     );
     Episodes? data = Episodes.fromJson(
-      result['data']['characters'],
+      result['data']['episodes'],
     );
     return data;
   }
@@ -25,9 +30,11 @@ class EpisodesGQLRepository implements EpisodesGQLRepositoryI {
   @override
   String buildQuery({required page, Map<String, dynamic> filter = const {}}) {
     String query = '';
-    query = 'episodes(page:$page FILTER_HERE)'
-        '{info {count,pages}results {name,id,air_date,episode,created}';
+    query = 'query {episodes(page:$page )'
+        '{info {count,pages}results {name,id,air_date,episode,created}}}';
     if (filter.isEmpty) {
+      query.replaceAll('FILTER_HERE', '');
+    } else {
       query.replaceAll('FILTER_HERE', '');
     }
     return query;

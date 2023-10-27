@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:rick_and_morty_app/src/config/router/routes.dart';
-import 'package:rick_and_morty_app/src/utils/utils/utils.dart';
 
 /// Perform non async navigation task
 class Navigation {
@@ -18,10 +17,10 @@ class Navigation {
 
   /// Navigator.pop custom implementation
   static goBack(BuildContext context, {VoidCallback? callback}) {
-    final navigator = GlobalLocator.appNavigator.currentState;
+    final navigator = Navigator.of(context);
     callback?.call();
-    if (navigator?.canPop() ?? false) {
-      navigator?.pop();
+    if (navigator.canPop()) {
+      navigator.pop();
     }
   }
 
@@ -33,25 +32,25 @@ class Navigation {
     bool replacement = false,
     Map<String, dynamic> extra = const {},
   }) {
-    final navigator = GlobalLocator.appNavigator.currentState;
+    final navigator = Navigator.of(context);
 
     Future.delayed(Duration.zero, () {
       if (removeUntil) {
-        if (navigator?.canPop() ?? false) {
-          navigator?.pop();
+        if (navigator.canPop()) {
+          navigator.pop();
         }
-        navigator?.pushNamedAndRemoveUntil(
+        navigator.pushNamedAndRemoveUntil(
           route,
           (Route<dynamic> route) => false,
           arguments: extra,
         );
       } else if (replacement) {
-        navigator?.pushReplacementNamed(
+        navigator.pushReplacementNamed(
           route,
           arguments: extra,
         );
       } else {
-        navigator?.pushNamed(
+        navigator.pushNamed(
           route,
           arguments: extra,
         );

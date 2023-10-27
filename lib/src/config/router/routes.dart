@@ -7,9 +7,13 @@ class Routes {
   static Map<String, WidgetBuilder> getRoutes() {
     return <String, WidgetBuilder>{
       root: (BuildContext context) => const HomeScreen(),
+      episodes: (BuildContext context) => const EpisodesScreen(),
     };
   }
 
   /// App root route name
   static String root = '/';
+
+  /// App episodes page route name
+  static String episodes = '/episodes';
 }

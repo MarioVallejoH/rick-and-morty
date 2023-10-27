@@ -66,6 +66,7 @@ class CustomAppBar extends StatelessWidget {
                       child: const Icon(
                         Icons.arrow_back_rounded,
                         size: 24,
+                        color: Colors.white,
                       ),
                     )
                   : const SizedBox(
@@ -73,7 +74,9 @@ class CustomAppBar extends StatelessWidget {
                     )),
           Expanded(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: centerTitle
+                  ? MainAxisAlignment.start
+                  : MainAxisAlignment.center,
               children: [
                 const HorizontalSpacer(
                   width: 4,
@@ -101,7 +104,7 @@ class CustomAppBar extends StatelessWidget {
             ),
           ),
           if (action != null) action!,
-          if (centerTitle && action == null)
+          if (action == null)
             const SizedBox(
               width: 28,
             ),
@@ -194,6 +197,7 @@ class CustomAppBar2 extends StatelessWidget {
               title!,
               style: theme.textTheme.headlineSmall?.copyWith(
                 fontSize: 26,
+                color: Colors.white,
               ),
             ),
         ],

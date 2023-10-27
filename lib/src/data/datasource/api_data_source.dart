@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:rick_and_morty_app/src/domain/entities/request_data.dart';
 import 'package:rick_and_morty_app/src/utils/utils/utils.dart';
@@ -12,6 +13,7 @@ class ApiDataSource {
   ApiDataSource() {
     _http.options.baseUrl =
         const String.fromEnvironment('HOST', defaultValue: '');
+    _http.interceptors.add(EncodingInterceptor());
   }
 
   /// Headers
@@ -84,10 +86,17 @@ class ApiDataSource {
     try {
       switch (requestData.method) {
         case Method.get:
-          data = await get(requestData.path);
+          data = await get(
+            requestData.path,
+            queryParameters: requestData.queryParameters,
+          );
           break;
         case Method.post:
-          data = await post(requestData.path, requestData.body);
+          data = await post(
+            requestData.path,
+            requestData.body,
+            queryParameters: requestData.queryParameters,
+          );
           break;
         default:
           return {
@@ -113,14 +122,17 @@ class ApiDataSource {
     return await _httpRequest(
       () async {
         try {
-          _logger.d('get() to ($endpoint) - headers ($_headers)');
+          _logger.d(
+            'get() to ($endpoint) - headers ($_headers) to ${_http.options.baseUrl}${_http.options.baseUrl}',
+          );
 
           final response = await _http.get(
             endpoint,
             queryParameters: queryParameters,
           );
           return response.data;
-        } on DioException {
+        } on DioException catch (e) {
+          _logger.e(e.requestOptions.path);
           rethrow;
         } on Exception catch (e) {
           return _resolveInternalError(e);
@@ -156,3 +168,42 @@ class ApiDataSource {
     );
   }
 }
+
+/// Dio Encoding interceptor
+class EncodingInterceptor extends Interceptor {
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    if (options.queryParameters.isEmpty) {
+      super.onRequest(options, handler);
+      return;
+    }
+
+    final queryParams = _getQueryParams(options.queryParameters);
+    handler.next(
+      options.copyWith(
+        path: _getNormalizedUrl(options.path, queryParams),
+        queryParameters: Map.from({}),
+      ),
+    );
+  }
+
+  String _getNormalizedUrl(String baseUrl, String queryParams) {
+    if (baseUrl.contains('?')) {
+      return '$baseUrl&$queryParams';
+    } else {
+      return '$baseUrl?$queryParams';
+    }
+  }
+
+  String _getQueryParams(Map<String, dynamic> map) {
+    String result = '';
+    map.forEach((key, value) {
+      result += '$key=$value&';
+    });
+    return result;
+  }
+}
+
+/// ApiDataSource instance
+final dataSourceProvider =
+    StateProvider<ApiDataSource>((ref) => ApiDataSource());
