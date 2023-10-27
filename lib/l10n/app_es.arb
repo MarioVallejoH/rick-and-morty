@@ -3,7 +3,13 @@
     "description": "The conventional newborn programmer greeting"
   },
   "airDate": "Fecha de estreno",
+  "characters": "Personajes",
+  "charactersList": "Lista de personajes",
   "episode": "Episodio",
   "episodes": "Episodios",
+  "status": "Estado",
+  "gender": "Genero",
+  "specie": "Especie",
+  "type": "Tipo",
   "episodesList": "Lista de episodios"
 }

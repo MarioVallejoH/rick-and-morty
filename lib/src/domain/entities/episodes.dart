@@ -1,3 +1,4 @@
+import 'package:rick_and_morty_app/src/domain/entities/characters.dart';
 import 'package:rick_and_morty_app/src/domain/entities/info.dart';
 
 /// Class to manage fetched episodes data
@@ -32,6 +33,7 @@ class Episode {
     required this.airDate,
     required this.episode,
     required this.created,
+    required this.characters,
   });
 
   /// From Map factory
@@ -40,7 +42,10 @@ class Episode {
         id: json['id'],
         airDate: json['air_date'],
         episode: json['episode'],
-        created: DateTime.parse(json['created']),
+        created: DateTime.tryParse(json['created'] ?? ''),
+        characters: json['characters'] != null
+            ? Character.fromJsonList(json['characters'])
+            : null,
       );
 
   /// Episode name
@@ -56,5 +61,8 @@ class Episode {
   String episode;
 
   /// Episode create date
-  DateTime created;
+  DateTime? created;
+
+  /// Characters
+  List<Character>? characters;
 }

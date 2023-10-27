@@ -20,5 +20,5 @@ abstract class EpisodesGQLRepositoryI {
   Future<Episodes> get({int page = 1, Map<String, dynamic>? filter});
 
   /// Get one episode for a given id
-  Future<Episode> getOne(int id);
+  Future<Episode?> getOne(String? id);
 }

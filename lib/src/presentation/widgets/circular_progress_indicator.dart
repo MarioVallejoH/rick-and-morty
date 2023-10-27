@@ -46,6 +46,53 @@ class SizedCustomProgressIndicator extends StatelessWidget {
   }
 }
 
+/// It's equal to [SizedCustomProgressIndicator] but with background
+class SizedCustomProgressIndicator2 extends StatelessWidget {
+  /// Constructor
+  const SizedCustomProgressIndicator2({
+    Key? key,
+    this.size = 25,
+    this.headRadius = 2.5,
+    this.strokeWidth = 2,
+    this.color,
+  }) : super(
+          key: key,
+        );
+
+  /// Widget size (h and w)
+  final double size;
+
+  /// Progress indicator stroke width
+  final double strokeWidth;
+
+  /// Progress indicator head radius
+  final double headRadius;
+
+  /// Optional color to apply on
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size + 6,
+      height: size + 6,
+      padding: const EdgeInsets.all(6.0),
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(99),
+      ),
+      child: SizedCustomProgressIndicator(
+        color: color,
+        headRadius: headRadius,
+        size: size,
+        key: key,
+        strokeWidth: strokeWidth,
+      ),
+    );
+  }
+}
+
 const int _kIndeterminateCircularDuration = 1333 * 2222;
 
 /// Custom implementation of Circular Progress indicator

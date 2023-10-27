@@ -2,7 +2,13 @@
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
   },
-  "airDate": "Episode",
+  "airDate": "AirDate",
+  "characters": "Characters",
+  "charactersList": "Characters list",
+  "status": "Status",
+  "gender": "Gender",
+  "specie": "Specie",
+  "type": "Type",
   "episode": "Episode",
   "episodes": "Episodes",
   "episodesList": "Episodes list"

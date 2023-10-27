@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rick_and_morty_app/src/data/dataSource/api_data_source.dart';
 import 'package:rick_and_morty_app/src/data/repositories/episodes_repository.dart';
 import 'package:rick_and_morty_app/src/domain/entities/episodes.dart';
 
@@ -21,13 +20,23 @@ final episodesPageProvider = StateProvider.autoDispose<int>((ref) {
 ///
 /// Calls episodes repository to fetch Episodes data
 final episodesFetchProvider = FutureProvider.autoDispose<Episodes>((ref) {
-  final episodesRepo = EpisodesGQLRepository(ref.read(dataSourceProvider));
-  return episodesRepo.get(page: ref.watch(episodesPageProvider));
+  return ref
+      .read(episodesRepositoryProvider)
+      .get(page: ref.watch(episodesPageProvider));
+});
+
+/// Episodes data provider
+///
+/// Calls episodes repository to fetch Episodes data
+final episodeFetchProvider = FutureProvider.autoDispose<Episode?>((ref) {
+  return ref
+      .read(episodesRepositoryProvider)
+      .getOne(ref.read(episodeSelectedProvider)?.id);
 });
 
 /// Episodes current selection
 ///
 /// Save current episode selected
-final episodeSelectedProvider = StateProvider.autoDispose<Episode?>((ref) {
+final episodeSelectedProvider = StateProvider<Episode?>((ref) {
   return null;
 });

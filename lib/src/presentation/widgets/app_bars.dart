@@ -184,6 +184,7 @@ class CustomAppBar2 extends StatelessWidget {
             child: const Icon(
               Icons.arrow_back_rounded,
               size: 30,
+              color: Colors.white,
             ),
           ),
       const SafeSpacer(

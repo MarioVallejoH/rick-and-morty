@@ -4,6 +4,7 @@ import 'package:rick_and_morty_app/src/presentation/state/episodes/episodes_prov
 import 'package:rick_and_morty_app/src/presentation/views/episodes/widgets/episode_card.dart';
 import 'package:rick_and_morty_app/src/presentation/widgets/circular_progress_indicator.dart';
 import 'package:rick_and_morty_app/src/presentation/widgets/widgets.dart';
+import 'package:rick_and_morty_app/src/utils/utils/navigation.dart';
 
 /// Episodes list
 ///
@@ -68,7 +69,15 @@ class _EpisodesListState extends ConsumerState<EpisodesList> {
               padding: EdgeInsets.zero,
               itemCount: episodes.episodes.length,
               itemBuilder: (context, index) {
-                return EpisodeCard(data: episodes.episodes[index]);
+                return EpisodeCard(
+                  data: episodes.episodes[index],
+                  onTap: () {
+                    ref
+                        .read(episodeSelectedProvider.notifier)
+                        .update((state) => state = episodes.episodes[index]);
+                    Navigation.goTo(Routes.episode, context);
+                  },
+                );
               },
             ),
           ),
@@ -97,19 +106,7 @@ class _EpisodesListState extends ConsumerState<EpisodesList> {
                 return const SizedBox();
               },
               error: (error, stackTrace) => Container(),
-              loading: () => Container(
-                width: 31,
-                height: 31,
-                padding: const EdgeInsets.all(6.0),
-                margin: const EdgeInsets.only(bottom: 16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(99),
-                ),
-                child: const SizedCustomProgressIndicator(
-                  size: 25,
-                ),
-              ),
+              loading: () => const SizedCustomProgressIndicator2(),
             ),
       ],
     );

@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rick_and_morty_app/src/data/dataSource/api_data_source.dart';
 import 'package:rick_and_morty_app/src/domain/entities/episodes.dart';
 import 'package:rick_and_morty_app/src/domain/entities/request_data.dart';
@@ -45,9 +46,10 @@ class EpisodesGQLRepository implements EpisodesGQLRepositoryI {
   }
 
   @override
-  Future<Episode> getOne(int id) async {
-    const query =
-        'query {episode(id:1) {name,id,air_date,episode,created,characters{id,name,status,species,gender,image,origin{id,name,type,dimension,created},location{id,name,type,dimension,created}}}}';
+  Future<Episode?> getOne(String? id) async {
+    if (id == null) return null;
+    final query =
+        'query {episode(id:$id) {name,id,air_date,episode,created,characters{id,name,status,,type,species,gender,image}}}';
     final requestData = RequestData(
       path: '/graphql',
       queryParameters: {
@@ -57,9 +59,17 @@ class EpisodesGQLRepository implements EpisodesGQLRepositoryI {
     final result = await api.request(
       requestData: requestData,
     );
-    Episodes? data = Episodes.fromJson(
-      result['data']['episodes'],
+    Episode? data = Episode.fromJson(
+      result['data']['episode'],
     );
-    return data.episodes.first;
+    return data;
   }
 }
+
+/// Episodes repository provider
+final episodesRepositoryProvider =
+    StateProvider.autoDispose<EpisodesGQLRepositoryI>(
+  (ref) {
+    return EpisodesGQLRepository(ref.read(dataSourceProvider));
+  },
+);

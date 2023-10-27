@@ -8,6 +8,7 @@ class Routes {
     return <String, WidgetBuilder>{
       root: (BuildContext context) => const HomeScreen(),
       episodes: (BuildContext context) => const EpisodesScreen(),
+      episode: (BuildContext context) => const EpisodeScreen(),
     };
   }
 
@@ -16,4 +17,7 @@ class Routes {
 
   /// App episodes page route name
   static String episodes = '/episodes';
+
+  /// App episode page route name
+  static String episode = '/episode';
 }

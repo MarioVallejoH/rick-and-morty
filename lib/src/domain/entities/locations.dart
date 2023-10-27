@@ -40,7 +40,7 @@ class Location {
         id: json['id'],
         type: json['type'],
         dimension: json['dimension'],
-        created: DateTime.parse(json['created']),
+        created: DateTime.tryParse(json['created'] ?? ''),
       );
 
   /// Location name
@@ -56,5 +56,5 @@ class Location {
   String dimension;
 
   /// Location create date
-  DateTime created;
+  DateTime? created;
 }

@@ -3,6 +3,7 @@
 import 'package:rick_and_morty_app/src/domain/entities/info.dart';
 import 'package:rick_and_morty_app/src/domain/entities/locations.dart';
 import 'package:rick_and_morty_app/src/utils/enums.dart';
+import 'package:rick_and_morty_app/src/utils/utils/global_locator.dart';
 
 /// Characters entity
 ///
@@ -46,19 +47,20 @@ class Character {
   });
 
   /// From Json Map factory
-  factory Character.fromJson(Map<String, dynamic> json) => Character(
-        name: json['name'],
-        id: json['id'],
-        status: statusValues.map[json['status']]!,
-        species: json['species'],
-        type: json['type'],
-        gender: genderValues.map[json['gender']]!,
-        image: json['image'],
-        created: DateTime.parse(json['created']),
+  factory Character.fromJson(Map json) => Character(
+        name: json['name'] ?? '',
+        id: json['id'] ?? '',
+        status: statusValues.map[json['status'] ?? '']!,
+        species: json['species'] ?? '',
+        type: json['type'] ?? '',
+        gender: genderValues.map[json['gender'] ?? '']!,
+        image: json['image'] ?? '',
+        created: DateTime.tryParse(json['created'] ?? ''),
         location: json['location'] != null
             ? Location.fromJson(json['location'])
             : null,
-        origin: json['origin'] != null ? Origin.fromJson(json['origin']) : null,
+        origin:
+            json['origin'] != null ? Location.fromJson(json['origin']) : null,
       );
 
   /// Character name
@@ -83,13 +85,26 @@ class Character {
   String image;
 
   /// Character created date
-  DateTime created;
+  DateTime? created;
 
   /// Character location data
   Location? location;
 
   /// Character origin data
-  Origin? origin;
+  Location? origin;
+
+  /// Parse a list of entities from a Json List<Map>
+  static List<Character> fromJsonList(List data) {
+    final List<Character> result = [];
+    for (var element in data) {
+      try {
+        result.add(Character.fromJson(element as Map));
+      } catch (e) {
+        GlobalLocator.appLogger.e(e);
+      }
+    }
+    return result;
+  }
 }
 
 /// Genders
@@ -117,35 +132,3 @@ final statusValues = EnumValues({
   'unknown': Status.UNKNOWN,
   '': Status.UNKNOWN,
 });
-
-/// Character origin data
-class Origin {
-  /// Class constructor
-  Origin({
-    required this.id,
-    required this.name,
-    required this.dimension,
-    required this.created,
-  });
-
-  /// From json map factory
-  factory Origin.fromJson(Map<String, dynamic> json) => Origin(
-        id: json['id'],
-        name: json['name'],
-        dimension: json['dimension'],
-        created:
-            json['created'] == null ? null : DateTime.parse(json['created']),
-      );
-
-  /// Origin id
-  String? id;
-
-  /// Origin name
-  String name;
-
-  /// origin dimension
-  String? dimension;
-
-  /// origin created date
-  DateTime? created;
-}

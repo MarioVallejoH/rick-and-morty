@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:rick_and_morty_app/src/config/router/routes.dart';
 
+export 'package:rick_and_morty_app/src/config/router/routes.dart';
+
 /// Perform non async navigation task
 class Navigation {
   /// Go to Home
