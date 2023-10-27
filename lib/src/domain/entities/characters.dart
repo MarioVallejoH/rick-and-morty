@@ -55,8 +55,10 @@ class Character {
         gender: genderValues.map[json['gender']]!,
         image: json['image'],
         created: DateTime.parse(json['created']),
-        location: Location.fromJson(json['location']),
-        origin: Origin.fromJson(json['origin']),
+        location: json['location'] != null
+            ? Location.fromJson(json['location'])
+            : null,
+        origin: json['origin'] != null ? Origin.fromJson(json['origin']) : null,
       );
 
   /// Character name
@@ -84,10 +86,10 @@ class Character {
   DateTime created;
 
   /// Character location data
-  Location location;
+  Location? location;
 
   /// Character origin data
-  Origin origin;
+  Origin? origin;
 }
 
 /// Genders

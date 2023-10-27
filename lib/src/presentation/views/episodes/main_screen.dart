@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rick_and_morty_app/src/config/config.dart';
 import 'package:rick_and_morty_app/src/presentation/state/episodes/episodes_provider.dart';
 import 'package:rick_and_morty_app/src/presentation/views/episodes/widgets/episodes_list.dart';
 import 'package:rick_and_morty_app/src/presentation/widgets/widgets.dart';
@@ -14,14 +15,16 @@ class EpisodesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final appLocalizations = AppLocalizations.of(context);
     return CustomScaffold(
       body: ColumnWithPadding(
         children: [
           CustomAppBar(
-            title: 'Episodes List',
+            title: appLocalizations?.episodesList,
             onBack: () {
               ref.invalidate(episodesProvider);
               ref.invalidate(episodesFetchProvider);
+              ref.invalidate(episodesPageProvider);
               Navigation.goBack(context);
             },
           ),

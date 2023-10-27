@@ -18,4 +18,7 @@ abstract class EpisodesGQLRepositoryI {
 
   /// Get Episodes data with optional filters
   Future<Episodes> get({int page = 1, Map<String, dynamic>? filter});
+
+  /// Get one episode for a given id
+  Future<Episode> getOne(int id);
 }

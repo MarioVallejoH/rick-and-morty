@@ -30,13 +30,36 @@ class EpisodesGQLRepository implements EpisodesGQLRepositoryI {
   @override
   String buildQuery({required page, Map<String, dynamic> filter = const {}}) {
     String query = '';
-    query = 'query {episodes(page:$page )'
-        '{info {count,pages}results {name,id,air_date,episode,created}}}';
-    if (filter.isEmpty) {
-      query.replaceAll('FILTER_HERE', '');
-    } else {
-      query.replaceAll('FILTER_HERE', '');
+
+    String filterString = '';
+    if (filter.isNotEmpty) {
+      filterString += 'filter {';
+      filter.forEach((key, value) {
+        filterString += '$key:"$value"';
+      });
+      filterString += '}';
     }
+    query = 'query {episodes(page:$page, $filterString)'
+        '{info {count,pages}results {name,id,air_date,episode,created,}}}';
     return query;
+  }
+
+  @override
+  Future<Episode> getOne(int id) async {
+    const query =
+        'query {episode(id:1) {name,id,air_date,episode,created,characters{id,name,status,species,gender,image,origin{id,name,type,dimension,created},location{id,name,type,dimension,created}}}}';
+    final requestData = RequestData(
+      path: '/graphql',
+      queryParameters: {
+        'query': query,
+      },
+    );
+    final result = await api.request(
+      requestData: requestData,
+    );
+    Episodes? data = Episodes.fromJson(
+      result['data']['episodes'],
+    );
+    return data.episodes.first;
   }
 }

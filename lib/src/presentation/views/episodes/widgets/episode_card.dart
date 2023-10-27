@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rick_and_morty_app/src/config/config.dart';
 import 'package:rick_and_morty_app/src/domain/entities/episodes.dart';
 import 'package:rick_and_morty_app/src/utils/constants/sizes.dart';
 import 'package:rick_and_morty_app/src/utils/extensions/extensions.dart';
@@ -18,6 +19,8 @@ class EpisodeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final responsive = GlobalLocator.responsiveDesign;
     final textTheme = Theme.of(context).textTheme;
+    final appLocalizations = AppLocalizations.of(context);
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppSizes.genericBorderRadius),
@@ -26,12 +29,11 @@ class EpisodeCard extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       child: Row(
         children: [
-          const SizedBox(
+          SizedBox(
             height: 85,
             width: 85,
-            child: Icon(
-              Icons.video_camera_back_outlined,
-            ),
+            //TODO: Search or make a free image for this
+            child: Image.asset('assets/images/episodes.jpg'),
           ),
           Expanded(
             child: Container(
@@ -54,12 +56,12 @@ class EpisodeCard extends StatelessWidget {
                   ),
                   _LabeledText(
                     data: data.episode.toUpperCase(),
-                    label: 'Episode',
+                    label: appLocalizations?.episode ?? '',
                     textTheme: textTheme,
                   ),
                   _LabeledText(
                     data: data.airDate,
-                    label: 'AirDate',
+                    label: appLocalizations?.airDate ?? '',
                     textTheme: textTheme,
                   ),
                 ],
