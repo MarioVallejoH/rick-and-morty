@@ -1,5 +1,6 @@
 import 'package:rick_and_morty_app/src/domain/entities/characters.dart';
 import 'package:rick_and_morty_app/src/domain/entities/info.dart';
+import 'package:rick_and_morty_app/src/utils/utils/utils.dart';
 
 /// Class to manage fetched episodes data
 class Episodes {
@@ -37,7 +38,7 @@ class Episode {
   });
 
   /// From Map factory
-  factory Episode.fromJson(Map<String, dynamic> json) => Episode(
+  factory Episode.fromJson(Map json) => Episode(
         name: json['name'],
         id: json['id'],
         airDate: json['air_date'],
@@ -65,4 +66,17 @@ class Episode {
 
   /// Characters
   List<Character>? characters;
+
+  /// Parse a list of entities from a Json List<Map>
+  static List<Episode> fromJsonList(List data) {
+    final List<Episode> result = [];
+    for (var element in data) {
+      try {
+        result.add(Episode.fromJson(element as Map));
+      } catch (e) {
+        GlobalLocator.appLogger.e(e);
+      }
+    }
+    return result;
+  }
 }

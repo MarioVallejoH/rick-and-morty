@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rick_and_morty_app/src/config/config.dart';
-import 'package:rick_and_morty_app/src/presentation/state/episodes/episodes_provider.dart';
-import 'package:rick_and_morty_app/src/presentation/views/episodes/widgets/episodes_list.dart';
+import 'package:rick_and_morty_app/src/presentation/views/episodes/widgets/episodes_body.dart';
 import 'package:rick_and_morty_app/src/presentation/widgets/widgets.dart';
-import 'package:rick_and_morty_app/src/utils/utils/utils.dart';
 
 /// Episodes Screen
 ///
@@ -19,17 +17,17 @@ class EpisodesScreen extends ConsumerWidget {
     return CustomScaffold(
       body: ColumnWithPadding(
         children: [
-          CustomAppBar(
+          CustomAppBar2(
             title: appLocalizations?.episodesList,
-            onBack: () {
-              ref.invalidate(episodesProvider);
-              ref.invalidate(episodesFetchProvider);
-              ref.invalidate(episodesPageProvider);
-              Navigation.goBack(context);
-            },
+            subtitle: appLocalizations?.episodesListText,
+            includeBackArrow: false,
+            includeBottomSpacer: true,
           ),
           const Expanded(
-            child: EpisodesList(),
+            child: EpisodesBody(),
+          ),
+          const SafeSpacer(
+            height: 8,
           ),
         ],
       ),

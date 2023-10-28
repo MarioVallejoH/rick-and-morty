@@ -17,4 +17,7 @@ abstract class CharactersGQLRepositoryI {
 
   /// Get characters data with optional filters
   Future<Characters> get({int page = 1, Map<String, dynamic>? filter});
+
+  /// Get one episode for a given id
+  Future<Character?> getOne(String? id);
 }

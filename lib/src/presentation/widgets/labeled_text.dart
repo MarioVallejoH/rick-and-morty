@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rick_and_morty_app/src/utils/extensions/extensions.dart';
 
 /// Text with a label and data
 class LabeledText extends StatelessWidget {
@@ -9,6 +8,7 @@ class LabeledText extends StatelessWidget {
     required this.data,
     required this.label,
     this.textColor,
+    this.maxLines = 1,
   });
 
   /// Data labeled
@@ -20,6 +20,9 @@ class LabeledText extends StatelessWidget {
   /// Color to use on text
   final Color? textColor;
 
+  /// Text maxLines
+  final int maxLines;
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -29,14 +32,14 @@ class LabeledText extends StatelessWidget {
       text: TextSpan(
         children: [
           TextSpan(
-            text: label.capitalize(),
+            text: label,
             style: textTheme.bodyMedium?.copyWith(
               color: textColor,
               fontWeight: FontWeight.w600,
             ),
           ),
           TextSpan(
-            text: ': ${data.capitalize()}',
+            text: ': $data',
             style: textTheme.bodyMedium?.copyWith(
               color: textColor,
             ),

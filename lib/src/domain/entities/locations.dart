@@ -44,16 +44,16 @@ class Location {
       );
 
   /// Location name
-  String name;
+  String? name;
 
   /// Location id
-  String id;
+  String? id;
 
   /// Location type
-  String type;
+  String? type;
 
   /// Location dimension
-  String dimension;
+  String? dimension;
 
   /// Location create date
   DateTime? created;

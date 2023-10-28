@@ -10,13 +10,13 @@ import 'package:rick_and_morty_app/src/utils/utils/global_locator.dart';
 /// Used to show a preview of an episode data on a list
 class EpisodeCard extends StatelessWidget {
   ///
-  const EpisodeCard({super.key, required this.data, required this.onTap});
+  const EpisodeCard({super.key, required this.data, this.onTap});
 
   /// Episode data to show
   final Episode data;
 
   /// Callback on card tap
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +30,13 @@ class EpisodeCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppSizes.genericBorderRadius),
           color: Colors.white,
+          boxShadow: const [
+            BoxShadow(
+              blurRadius: 0.05,
+              spreadRadius: 0.05,
+              blurStyle: BlurStyle.outer,
+            ),
+          ],
         ),
         clipBehavior: Clip.hardEdge,
         child: Row(
@@ -73,7 +80,7 @@ class EpisodeCard extends StatelessWidget {
                 ),
               ),
             ),
-            const Icon(Icons.keyboard_arrow_right_rounded),
+            if (onTap != null) const Icon(Icons.keyboard_arrow_right_rounded),
             const HorizontalSpacer(
               width: 16,
             ),

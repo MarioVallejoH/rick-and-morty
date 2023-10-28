@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rick_and_morty_app/src/presentation/state/characters/characters_repository.dart';
-import 'package:rick_and_morty_app/src/presentation/views/characters/widgets/characters_list.dart';
+import 'package:rick_and_morty_app/src/presentation/state/episodes/episodes_provider.dart';
+import 'package:rick_and_morty_app/src/presentation/views/episodes/widgets/episode_card.dart';
+import 'package:rick_and_morty_app/src/presentation/views/episodes/widgets/episodes_list.dart';
 import 'package:rick_and_morty_app/src/presentation/widgets/widgets.dart';
 
-/// Characters list
+/// Episodes list
 ///
-/// Shows a list of episodes on [CharacterCard]
-class CharactersBody extends ConsumerStatefulWidget {
+/// Shows a list of episodes on [EpisodeCard]
+class EpisodesBody extends ConsumerStatefulWidget {
   ///
-  const CharactersBody({
+  const EpisodesBody({
     super.key,
   });
 
   @override
-  ConsumerState<CharactersBody> createState() => _CharactersBodyState();
+  ConsumerState<EpisodesBody> createState() => _EpisodesBodyState();
 }
 
-class _CharactersBodyState extends ConsumerState<CharactersBody> {
+class _EpisodesBodyState extends ConsumerState<EpisodesBody> {
   /// ListView ScrollController
   final _controller = ScrollController();
 
@@ -30,13 +31,13 @@ class _CharactersBodyState extends ConsumerState<CharactersBody> {
       if (_controller.position.atEdge) {
         bool isTop = _controller.position.pixels == 0;
         if (!isTop) {
-          final charactersData = ref.read(charactersProvider);
-          if (charactersData != null) {
-            int currentPage = ref.read(charactersPageProvider);
-            if (charactersData.info.pages > currentPage &&
-                !ref.read(charactersFetchProvider).isLoading) {
+          final episodesData = ref.read(episodesProvider);
+          if (episodesData != null) {
+            int currentPage = ref.read(episodesPageProvider);
+            if (episodesData.info.pages > currentPage &&
+                !ref.read(episodesFetchProvider).isLoading) {
               ref
-                  .read(charactersPageProvider.notifier)
+                  .read(episodesPageProvider.notifier)
                   .update((state) => state = (currentPage += 1));
             }
           }
@@ -53,33 +54,33 @@ class _CharactersBodyState extends ConsumerState<CharactersBody> {
 
   @override
   Widget build(BuildContext context) {
-    final characters = ref.watch(charactersProvider);
+    final episodes = ref.watch(episodesProvider);
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
-        if (characters != null)
-          CharactersList(
-            characters: characters.characters,
+        if (episodes != null)
+          EpisodesList(
+            episodes: episodes.episodes,
             controller: _controller,
           ),
-        ref.watch(charactersFetchProvider).when(
+        ref.watch(episodesFetchProvider).when(
               data: (data) {
-                if (characters == null) {
+                if (episodes == null) {
                   Future.delayed(
                     Duration.zero,
                     () => ref
-                        .read(charactersProvider.notifier)
+                        .read(episodesProvider.notifier)
                         .update((state) => state = data),
                   );
                 } else {
                   Future.delayed(
                     Duration.zero,
                     () {
-                      final totalCharacters = characters.characters;
-                      totalCharacters.addAll(data.characters);
-                      data.characters = totalCharacters;
+                      final totalEpisodes = episodes.episodes;
+                      totalEpisodes.addAll(data.episodes);
+                      data.episodes = totalEpisodes;
                       ref
-                          .read(charactersProvider.notifier)
+                          .read(episodesProvider.notifier)
                           .update((state) => state = data);
                     },
                   );

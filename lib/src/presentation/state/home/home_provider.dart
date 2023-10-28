@@ -11,3 +11,10 @@ final homeStateProvider = FutureProvider<int>((ref) async {
     () => 0,
   );
 });
+
+/// Home screen bottom navbar index
+///
+/// Save current bottomBar index
+final homeBottomBarProvider = StateProvider.autoDispose<int>((ref) {
+  return 1;
+});

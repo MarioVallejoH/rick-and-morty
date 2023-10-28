@@ -4,6 +4,7 @@ import 'package:rick_and_morty_app/src/config/config.dart';
 import 'package:rick_and_morty_app/src/domain/entities/characters.dart';
 import 'package:rick_and_morty_app/src/presentation/widgets/widgets.dart';
 import 'package:rick_and_morty_app/src/utils/constants/sizes.dart';
+import 'package:rick_and_morty_app/src/utils/extensions/extensions.dart';
 import 'package:rick_and_morty_app/src/utils/utils/global_locator.dart';
 
 /// Character preview card
@@ -64,14 +65,14 @@ class CharacterCard extends StatelessWidget {
                       children: [
                         Expanded(
                           child: LabeledText(
-                            data: data.status.name,
+                            data: data.status.name.capitalize(),
                             label: appLocalizations?.status ?? '',
                             textColor: Colors.black,
                           ),
                         ),
                         Expanded(
                           child: LabeledText(
-                            data: data.gender.name,
+                            data: data.gender.name.capitalize(),
                             label: appLocalizations?.gender ?? '',
                             textColor: Colors.black,
                           ),
@@ -102,7 +103,7 @@ class CharacterCard extends StatelessWidget {
                 ),
               ),
             ),
-            const Icon(Icons.keyboard_arrow_right_rounded),
+            if (onTap != null) const Icon(Icons.keyboard_arrow_right_rounded),
             const HorizontalSpacer(
               width: 16,
             ),

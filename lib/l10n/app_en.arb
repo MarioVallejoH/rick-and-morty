@@ -2,14 +2,25 @@
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
   },
-  "airDate": "AirDate",
+  "airDate": "Air Date",
+  "home": "Home",
+  "locations": "Locations",
+  "locationsList": "Locations List",
   "characters": "Characters",
   "charactersList": "Characters list",
+  "charactersListText": "All Rick and Morty characters",
   "status": "Status",
   "gender": "Gender",
   "specie": "Specie",
+  "settings": "Settings",
   "type": "Type",
+  "name": "Name",
+  "origin": "Origin",
+  "dimension": "Dimension",
+  "location": "Location",
   "episode": "Episode",
+  "viewEpisodes": "View episodes",
   "episodes": "Episodes",
+  "episodesListText": "All Rick and Morty episodes",
   "episodesList": "Episodes list"
 }

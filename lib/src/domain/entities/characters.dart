@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:rick_and_morty_app/src/domain/entities/episodes.dart';
 import 'package:rick_and_morty_app/src/domain/entities/info.dart';
 import 'package:rick_and_morty_app/src/domain/entities/locations.dart';
 import 'package:rick_and_morty_app/src/utils/enums.dart';
@@ -44,16 +45,19 @@ class Character {
     required this.created,
     required this.location,
     required this.origin,
+    required this.episode,
   });
 
   /// From Json Map factory
   factory Character.fromJson(Map json) => Character(
         name: json['name'] ?? '',
         id: json['id'] ?? '',
-        status: statusValues.map[json['status'] ?? '']!,
+        status: statusValues.map[json['status'] ?? ''] ??
+            statusValues.map['unknown']!,
         species: json['species'] ?? '',
         type: json['type'] ?? '',
-        gender: genderValues.map[json['gender'] ?? '']!,
+        gender: genderValues.map[json['gender'] ?? ''] ??
+            genderValues.map['unknown']!,
         image: json['image'] ?? '',
         created: DateTime.tryParse(json['created'] ?? ''),
         location: json['location'] != null
@@ -61,6 +65,9 @@ class Character {
             : null,
         origin:
             json['origin'] != null ? Location.fromJson(json['origin']) : null,
+        episode: json['episode'] != null
+            ? Episode.fromJsonList(json['episode'])
+            : null,
       );
 
   /// Character name
@@ -93,6 +100,9 @@ class Character {
   /// Character origin data
   Location? origin;
 
+  /// Character episode
+  List<Episode>? episode;
+
   /// Parse a list of entities from a Json List<Map>
   static List<Character> fromJsonList(List data) {
     final List<Character> result = [];
@@ -109,7 +119,7 @@ class Character {
 
 /// Genders
 // ignore: public_member_api_docs
-enum Gender { FEMALE, MALE, UNKNOWN }
+enum Gender { FEMALE, MALE, UNKNOWN, GENDERLESS }
 
 /// Gender posible values
 final genderValues = EnumValues(
@@ -118,6 +128,7 @@ final genderValues = EnumValues(
     'Male': Gender.MALE,
     'unknown': Gender.UNKNOWN,
     '': Gender.UNKNOWN,
+    'Genderless': Gender.UNKNOWN,
   },
 );
 

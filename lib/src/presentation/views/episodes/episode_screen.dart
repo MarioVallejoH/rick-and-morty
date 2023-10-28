@@ -23,9 +23,11 @@ class EpisodeScreen extends ConsumerWidget {
           CustomAppBar2(
             title: episode?.name,
             onBack: () {
-              ref.invalidate(episodeSelectedProvider);
-              ref.invalidate(episodeFetchProvider);
               Navigation.goBack(context);
+              Future.delayed(Duration.zero, () {
+                ref.invalidate(episodeSelectedProvider);
+                ref.invalidate(episodeFetchProvider);
+              });
             },
           ),
           EpisodeDescription(episode: episode),

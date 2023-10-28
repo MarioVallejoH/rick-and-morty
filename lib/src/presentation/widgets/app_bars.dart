@@ -112,7 +112,7 @@ class CustomAppBar extends StatelessWidget {
       ),
       if (includeBottomSpacer)
         const SafeSpacer(
-          height: 16,
+          height: 20,
         ),
     ];
     if (padding) return ColumnWithPadding(children: children);
@@ -179,38 +179,59 @@ class CustomAppBar2 extends StatelessWidget {
     final children = [
       if (onTop) const HeaderSpacer(),
       prefix ??
-          InkWell(
-            onTap: onBack ?? () => Navigation.goBack(context),
-            child: const Icon(
-              Icons.arrow_back_rounded,
-              size: 30,
-              color: Colors.white,
-            ),
-          ),
+          (includeBackArrow
+              ? InkWell(
+                  onTap: onBack ?? () => Navigation.goBack(context),
+                  child: const Icon(
+                    Icons.arrow_back_rounded,
+                    size: 30,
+                    color: Colors.white,
+                  ),
+                )
+              : const SizedBox()),
       const SafeSpacer(
         height: 8,
       ),
       Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (titleIcon != null) titleIcon!,
-          if (title != null)
-            Text(
-              title!,
-              style: theme.textTheme.headlineSmall?.copyWith(
-                fontSize: 26,
-                color: Colors.white,
-              ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    if (titleIcon != null) titleIcon!,
+                    if (title != null)
+                      Expanded(
+                        child: Text(
+                          title!,
+                          style: theme.textTheme.headlineSmall?.copyWith(
+                            fontSize: 26,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+                if (subtitle != null) ...[
+                  const SafeSpacer(
+                    height: 6,
+                  ),
+                  Text(
+                    subtitle!,
+                    style: theme.textTheme.bodyLarge?.copyWith(),
+                  ),
+                ],
+              ],
             ),
+          ),
+          if (action != null) action!,
         ],
       ),
-      if (subtitle != null)
-        Text(
-          subtitle!,
-          style: theme.textTheme.bodyLarge?.copyWith(),
-        ),
       if (includeBottomSpacer)
         const SafeSpacer(
-          height: 16,
+          height: 18,
         ),
     ];
     if (padding) return ColumnWithPadding(children: children);

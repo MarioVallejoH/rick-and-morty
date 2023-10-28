@@ -1,114 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rick_and_morty_app/src/domain/entities/episodes.dart';
 import 'package:rick_and_morty_app/src/presentation/state/episodes/episodes_provider.dart';
-import 'package:rick_and_morty_app/src/presentation/views/episodes/widgets/episode_card.dart';
-import 'package:rick_and_morty_app/src/presentation/widgets/circular_progress_indicator.dart';
-import 'package:rick_and_morty_app/src/presentation/widgets/widgets.dart';
-import 'package:rick_and_morty_app/src/utils/utils/navigation.dart';
+import 'package:rick_and_morty_app/src/presentation/views/characters/widgets/character_card.dart';
+import 'package:rick_and_morty_app/src/presentation/views/episodes/widgets/widgets.dart';
+import 'package:rick_and_morty_app/src/presentation/widgets/spacers.dart';
+import 'package:rick_and_morty_app/src/utils/utils/utils.dart';
 
 /// Episodes list
 ///
-/// Shows a list of episodes on [EpisodeCard]
-class EpisodesList extends ConsumerStatefulWidget {
+/// Show a [CharacterCard] list for a given list of Episodes
+class EpisodesList extends ConsumerWidget {
   ///
   const EpisodesList({
     super.key,
+    this.controller,
+    required this.episodes,
+    this.enableNavigation = true,
   });
 
-  @override
-  ConsumerState<EpisodesList> createState() => _EpisodesListState();
-}
+  /// ListView controller
+  final ScrollController? controller;
 
-class _EpisodesListState extends ConsumerState<EpisodesList> {
-  /// ListView ScrollController
-  final _controller = ScrollController();
+  /// Data to show
+  final List<Episode> episodes;
 
-  @override
-  void initState() {
-    super.initState();
-
-    // Setup the listener.
-    _controller.addListener(() {
-      if (_controller.position.atEdge) {
-        bool isTop = _controller.position.pixels == 0;
-        if (!isTop) {
-          final episodesData = ref.read(episodesProvider);
-          if (episodesData != null) {
-            int currentPage = ref.read(episodesPageProvider);
-            if (episodesData.info.pages > currentPage &&
-                !ref.read(episodesFetchProvider).isLoading) {
-              ref
-                  .read(episodesPageProvider.notifier)
-                  .update((state) => state = (currentPage += 1));
-            }
-          }
-        }
-      }
-    });
-  }
+  /// To allow characters to be
+  final bool enableNavigation;
 
   @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final episodes = ref.watch(episodesProvider);
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        if (episodes != null)
-          Expanded(
-            child: ListView.separated(
-              controller: _controller,
-              separatorBuilder: (context, index) => const SafeSpacer(
-                height: 16,
-              ),
-              padding: EdgeInsets.zero,
-              itemCount: episodes.episodes.length,
-              itemBuilder: (context, index) {
-                return EpisodeCard(
-                  data: episodes.episodes[index],
-                  onTap: () {
-                    ref
-                        .read(episodeSelectedProvider.notifier)
-                        .update((state) => state = episodes.episodes[index]);
-                    Navigation.goTo(Routes.episode, context);
-                  },
-                );
-              },
-            ),
-          ),
-        ref.watch(episodesFetchProvider).when(
-              data: (data) {
-                if (episodes == null) {
-                  Future.delayed(
-                    Duration.zero,
-                    () => ref
-                        .read(episodesProvider.notifier)
-                        .update((state) => state = data),
-                  );
-                } else {
-                  Future.delayed(
-                    Duration.zero,
-                    () {
-                      final totalEpisodes = episodes.episodes;
-                      totalEpisodes.addAll(data.episodes);
-                      data.episodes = totalEpisodes;
-                      ref
-                          .read(episodesProvider.notifier)
-                          .update((state) => state = data);
-                    },
-                  );
+  Widget build(BuildContext context, WidgetRef ref) {
+    return ListView.separated(
+      controller: controller,
+      separatorBuilder: (context, index) => const SafeSpacer(
+        height: 30,
+      ),
+      padding: const EdgeInsets.only(
+        bottom: 20,
+      ),
+      itemCount: episodes.length,
+      itemBuilder: (context, index) {
+        return EpisodeCard(
+          data: episodes[index],
+          onTap: enableNavigation
+              ? () {
+                  ref
+                      .read(episodeSelectedProvider.notifier)
+                      .update((state) => state = episodes[index]);
+                  Navigation.goTo(Routes.episode, context);
                 }
-                return const SizedBox();
-              },
-              error: (error, stackTrace) => Container(),
-              loading: () => const SizedCustomProgressIndicator2(),
-            ),
-      ],
+              : null,
+        );
+      },
     );
   }
 }
