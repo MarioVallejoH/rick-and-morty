@@ -1,3 +1,4 @@
+import 'package:rick_and_morty_app/src/domain/entities/characters.dart';
 import 'package:rick_and_morty_app/src/domain/entities/info.dart';
 
 /// Locations data
@@ -32,6 +33,7 @@ class Location {
     required this.type,
     required this.dimension,
     required this.created,
+    required this.residents,
   });
 
   /// From Map factory
@@ -41,6 +43,7 @@ class Location {
         type: json['type'],
         dimension: json['dimension'],
         created: DateTime.tryParse(json['created'] ?? ''),
+        residents: Character.fromJsonList(json['residents'] ?? []),
       );
 
   /// Location name
@@ -57,4 +60,7 @@ class Location {
 
   /// Location create date
   DateTime? created;
+
+  /// LocationResidents
+  List<Character>? residents;
 }

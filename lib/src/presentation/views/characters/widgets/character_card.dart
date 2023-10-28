@@ -41,6 +41,10 @@ class CharacterCard extends StatelessWidget {
               width: 85,
               child: CachedNetworkImage(imageUrl: data.image),
             ),
+            const VerticalDivider(
+              width: 2,
+              thickness: 1,
+            ),
             Expanded(
               child: Container(
                 height: 85,

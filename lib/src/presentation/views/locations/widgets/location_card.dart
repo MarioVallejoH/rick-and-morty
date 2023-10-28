@@ -22,55 +22,64 @@ class LocationCard extends StatelessWidget {
     final appLocalizations = AppLocalizations.of(context);
     final textTheme = Theme.of(context).textTheme;
 
-    return Container(
-      height: 75,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppSizes.genericBorderRadius),
-        color: Colors.white,
-      ),
-      clipBehavior: Clip.hardEdge,
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Image.asset(
-              _imageName(data.type ?? ''),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    data.name ?? '',
-                    style: textTheme.headlineSmall?.copyWith(
-                      color: Colors.black,
-                      fontSize: 16,
-                    ),
-                    maxLines: 2,
-                  ),
-                  LabeledText(
-                    data: data.dimension ?? '',
-                    label: appLocalizations?.dimension ?? '',
-                    textColor: Colors.black87,
-                  ),
-                  LabeledText(
-                    data: data.type ?? '',
-                    label: appLocalizations?.type ?? '',
-                    textColor: Colors.black87,
-                  ),
-                ],
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 88,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AppSizes.genericBorderRadius),
+          color: Colors.white,
+        ),
+        clipBehavior: Clip.hardEdge,
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(17.0),
+              child: Image.asset(
+                _imageName(data.type ?? ''),
               ),
             ),
-          ),
-          if (onTap != null) const Icon(Icons.keyboard_arrow_right_rounded),
-          const HorizontalSpacer(
-            width: 16,
-          ),
-        ],
+            const VerticalDivider(
+              width: 2,
+              thickness: 1,
+            ),
+            Expanded(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      data.name ?? '',
+                      style: textTheme.headlineSmall?.copyWith(
+                        color: Colors.black,
+                        fontSize: 16,
+                      ),
+                      maxLines: 2,
+                    ),
+                    const Spacer(),
+                    LabeledText(
+                      data: data.dimension ?? '',
+                      label: appLocalizations?.dimension ?? '',
+                      textColor: Colors.black87,
+                    ),
+                    LabeledText(
+                      data: data.type ?? '',
+                      label: appLocalizations?.type ?? '',
+                      textColor: Colors.black87,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            if (onTap != null) const Icon(Icons.keyboard_arrow_right_rounded),
+            const HorizontalSpacer(
+              width: 16,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -89,10 +98,26 @@ class LocationCard extends StatelessWidget {
         return 'assets/images/dream.png';
       case 'Space station':
         return 'assets/images/space-station.png';
+      case 'Spacecraft':
+        return 'assets/images/space-station.png';
       case 'Dimension':
         return 'assets/images/galaxy.png';
+      case 'Box':
+        return 'assets/images/box.png';
       case 'Teenyverse':
         return 'assets/images/galaxy.png';
+      case 'Miniverse':
+        return 'assets/images/galaxy.png';
+      case 'Resort':
+        return 'assets/images/town.png';
+      case 'Town':
+        return 'assets/images/town.png';
+      case 'Fantasy town':
+        return 'assets/images/town.png';
+      case 'City':
+        return 'assets/images/town.png';
+      case 'Cluster':
+        return 'assets/images/cluster.png';
       case 'Asteroid':
         return 'assets/images/asteroid.png';
       default:

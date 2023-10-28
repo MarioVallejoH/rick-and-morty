@@ -47,6 +47,10 @@ class EpisodeCard extends StatelessWidget {
               //TODO: Search or make a free image for this
               child: Image.asset('assets/images/episodes.jpg'),
             ),
+            const VerticalDivider(
+              width: 2,
+              thickness: 1,
+            ),
             Expanded(
               child: Container(
                 height: 85,

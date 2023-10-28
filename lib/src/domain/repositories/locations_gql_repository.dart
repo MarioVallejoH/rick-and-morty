@@ -17,4 +17,7 @@ abstract class LocationsGQLRepositoryI {
 
   /// Get locations data with optional filters
   Future<Locations> get({int page = 1, Map<String, dynamic>? filter});
+
+  /// Get one episode for a given id
+  Future<Location?> getOne(String? id);
 }

@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rick_and_morty_app/src/domain/entities/episodes.dart';
-import 'package:rick_and_morty_app/src/presentation/state/episodes/episodes_provider.dart';
-import 'package:rick_and_morty_app/src/presentation/views/characters/widgets/character_card.dart';
-import 'package:rick_and_morty_app/src/presentation/views/episodes/widgets/widgets.dart';
+import 'package:rick_and_morty_app/src/domain/entities/locations.dart';
+import 'package:rick_and_morty_app/src/presentation/state/locations/locations_provider.dart';
+import 'package:rick_and_morty_app/src/presentation/views/locations/widgets/widgets.dart';
 import 'package:rick_and_morty_app/src/presentation/widgets/spacers.dart';
 import 'package:rick_and_morty_app/src/utils/utils/utils.dart';
 
-/// Episodes list
+/// Locations list
 ///
-/// Show a [CharacterCard] list for a given list of Episodes
-class EpisodesList extends ConsumerWidget {
+/// Show a [LocationCard] list for a given list of Locations
+class LocationsList extends ConsumerWidget {
   ///
-  const EpisodesList({
+  const LocationsList({
     super.key,
     this.controller,
-    required this.episodes,
+    required this.locations,
     this.enableNavigation = true,
   });
 
@@ -23,7 +22,7 @@ class EpisodesList extends ConsumerWidget {
   final ScrollController? controller;
 
   /// Data to show
-  final List<Episode> episodes;
+  final List<Location> locations;
 
   /// To allow characters to be
   final bool enableNavigation;
@@ -38,16 +37,16 @@ class EpisodesList extends ConsumerWidget {
       separatorBuilder: (context, index) => const SafeSpacer(
         height: 16,
       ),
-      itemCount: episodes.length,
+      itemCount: locations.length,
       itemBuilder: (context, index) {
-        return EpisodeCard(
-          data: episodes[index],
+        return LocationCard(
+          data: locations[index],
           onTap: enableNavigation
               ? () {
                   ref
-                      .read(episodeSelectedProvider.notifier)
-                      .update((state) => state = episodes[index]);
-                  Navigation.goTo(Routes.episode, context);
+                      .read(locationSelectedProvider.notifier)
+                      .update((state) => state = locations[index]);
+                  Navigation.goTo(Routes.location, context);
                 }
               : null,
         );

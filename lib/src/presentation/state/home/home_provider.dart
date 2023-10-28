@@ -16,5 +16,5 @@ final homeStateProvider = FutureProvider<int>((ref) async {
 ///
 /// Save current bottomBar index
 final homeBottomBarProvider = StateProvider.autoDispose<int>((ref) {
-  return 1;
+  return 0;
 });

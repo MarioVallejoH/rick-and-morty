@@ -10,6 +10,7 @@ class Routes {
       episodes: (BuildContext context) => const EpisodesScreen(),
       episode: (BuildContext context) => const EpisodeScreen(),
       character: (BuildContext context) => const CharacterScreen(),
+      location: (BuildContext context) => const LocationScreen(),
     };
   }
 
@@ -24,4 +25,7 @@ class Routes {
 
   /// App character page route name
   static String character = '/character';
+
+  /// App location page route name
+  static String location = '/location';
 }

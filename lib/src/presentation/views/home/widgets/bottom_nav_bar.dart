@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rick_and_morty_app/src/config/config.dart';
 import 'package:rick_and_morty_app/src/presentation/state/home/home_provider.dart';
+import 'package:rick_and_morty_app/src/utils/constants/sizes.dart';
+import 'package:rick_and_morty_app/src/utils/utils/utils.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 /// Home screen bottom navigation bar
@@ -15,20 +17,18 @@ class HomeNavBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = Theme.of(context).colorScheme;
     final appLocations = AppLocalizations.of(context);
+    final responsive = GlobalLocator.responsiveDesign;
     return SalomonBottomBar(
       backgroundColor: colors.onPrimary,
       selectedColorOpacity: 0.1,
+      margin: EdgeInsets.symmetric(
+        horizontal: responsive.width(AppSizes.bodyDefaultHPadding),
+        vertical: responsive.maxHeightValue(16),
+      ),
       currentIndex: ref.watch(homeBottomBarProvider),
       onTap: (i) =>
           ref.read(homeBottomBarProvider.notifier).update((state) => state = i),
       items: [
-        /// Home
-        SalomonBottomBarItem(
-          icon: const Icon(Icons.home),
-          title: Text(appLocations?.home ?? 'Home'),
-          selectedColor: const Color.fromARGB(255, 134, 122, 10),
-        ),
-
         /// Search
         SalomonBottomBarItem(
           icon: const Icon(Icons.people_alt_rounded),
