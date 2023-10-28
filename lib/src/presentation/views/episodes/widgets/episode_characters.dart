@@ -29,7 +29,7 @@ class EpisodeCharacters extends ConsumerWidget {
         ref.watch(episodeFetchProvider).when(
               data: (data) {
                 return Expanded(
-                  child: CharactersList(characters: data!.characters!),
+                  child: CharactersList(characters: data?.characters ?? []),
                 );
               },
               error: (error, stackTrace) => ErrorWidget(error),

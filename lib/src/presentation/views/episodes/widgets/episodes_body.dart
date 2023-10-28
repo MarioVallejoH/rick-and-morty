@@ -70,13 +70,14 @@ class _EpisodesBodyState extends ConsumerState<EpisodesBody> {
           child: Builder(
             builder: (context) {
               final episodes = ref.watch(episodesProvider);
-              return Stack(
-                alignment: Alignment.bottomCenter,
+              return Column(
                 children: [
                   if (episodes != null)
-                    EpisodesList(
-                      episodes: episodes.episodes,
-                      controller: _controller,
+                    Expanded(
+                      child: EpisodesList(
+                        episodes: episodes.episodes,
+                        controller: _controller,
+                      ),
                     ),
                   ref.watch(episodesFetchProvider).when(
                         data: (data) {

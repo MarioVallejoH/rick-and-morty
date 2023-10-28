@@ -69,7 +69,6 @@ class _LocationsBodyState extends ConsumerState<LocationsBody> {
           child: Builder(
             builder: (context) {
               final locations = ref.watch(locationsProvider);
-
               return Stack(
                 alignment: Alignment.bottomCenter,
                 children: [

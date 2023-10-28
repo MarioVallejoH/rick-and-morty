@@ -177,7 +177,10 @@ class CustomAppBar2 extends StatelessWidget {
     );
     final theme = Theme.of(context);
     final children = [
-      if (onTop) const HeaderSpacer(),
+      if (onTop)
+        const HeaderSpacer(
+          height: 32,
+        ),
       prefix ??
           (includeBackArrow
               ? InkWell(

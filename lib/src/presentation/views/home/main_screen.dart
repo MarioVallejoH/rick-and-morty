@@ -20,7 +20,7 @@ class HomeScreen extends ConsumerWidget {
       const CharactersScreen(),
       const LocationsScreen(),
       const EpisodesScreen(),
-      const CustomScaffold(),
+      const SettingsScreen(),
     ];
     return ref.watch(homeStateProvider).when(
           data: (data) {

@@ -95,7 +95,7 @@ ThemeData globalTheme() {
       inversePrimary: AppColors.primary_300,
       primaryContainer: AppColors.primary_200,
       outline: AppColors.primary_300,
-      secondary: Colors.white,
+      secondary: AppColors.secondary_500,
       onSecondary: const Color(0xffFBFBFB),
       onPrimary: const Color(0xffEBF1FF),
       tertiary: Colors.white,

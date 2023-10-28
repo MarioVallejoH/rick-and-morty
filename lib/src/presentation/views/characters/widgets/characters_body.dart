@@ -72,8 +72,7 @@ class _CharactersBodyState extends ConsumerState<CharactersBody> {
           child: Builder(
             builder: (context) {
               final characters = ref.watch(charactersProvider);
-              return Stack(
-                alignment: Alignment.bottomCenter,
+              return Column(
                 children: [
                   if (characters != null)
                     Expanded(
