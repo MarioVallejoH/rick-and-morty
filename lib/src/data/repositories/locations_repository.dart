@@ -34,9 +34,9 @@ class LocationsGQLRepository implements LocationsGQLRepositoryI {
 
     String filterString = '';
     if (filter.isNotEmpty) {
-      filterString += 'filter {';
+      filterString += 'filter: {';
       filter.forEach((key, value) {
-        filterString += '$key:"$value"';
+        filterString += '$key:"$value",';
       });
       filterString += '}';
     }

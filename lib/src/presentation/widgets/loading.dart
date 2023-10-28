@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rick_and_morty_app/src/presentation/widgets/circular_progress_indicator.dart';
 import 'package:rick_and_morty_app/src/presentation/widgets/widgets.dart';
 
 /// Loading screen

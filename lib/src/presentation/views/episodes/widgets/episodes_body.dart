@@ -54,42 +54,62 @@ class _EpisodesBodyState extends ConsumerState<EpisodesBody> {
 
   @override
   Widget build(BuildContext context) {
-    final episodes = ref.watch(episodesProvider);
-    return Stack(
-      alignment: Alignment.bottomCenter,
+    return Column(
       children: [
-        if (episodes != null)
-          EpisodesList(
-            episodes: episodes.episodes,
-            controller: _controller,
+        SearchField(
+          onChanged: (String value) {
+            ref.read(episodesFilterProvider.notifier).update(
+                  (state) => state = {
+                    'name': value,
+                  },
+                );
+          },
+        ),
+        const SafeSpacer(),
+        Expanded(
+          child: Builder(
+            builder: (context) {
+              final episodes = ref.watch(episodesProvider);
+              return Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  if (episodes != null)
+                    EpisodesList(
+                      episodes: episodes.episodes,
+                      controller: _controller,
+                    ),
+                  ref.watch(episodesFetchProvider).when(
+                        data: (data) {
+                          if (episodes == null) {
+                            Future.delayed(
+                              Duration.zero,
+                              () => ref
+                                  .read(episodesProvider.notifier)
+                                  .update((state) => state = data),
+                            );
+                          } else {
+                            Future.delayed(
+                              Duration.zero,
+                              () {
+                                final totalEpisodes = episodes.episodes;
+                                totalEpisodes.addAll(data.episodes);
+                                data.episodes = totalEpisodes;
+                                ref
+                                    .read(episodesProvider.notifier)
+                                    .update((state) => state = data);
+                              },
+                            );
+                          }
+                          return const SizedBox();
+                        },
+                        error: (error, stackTrace) => Container(),
+                        loading: () => const SizedCustomProgressIndicator2(),
+                      ),
+                ],
+              );
+            },
           ),
-        ref.watch(episodesFetchProvider).when(
-              data: (data) {
-                if (episodes == null) {
-                  Future.delayed(
-                    Duration.zero,
-                    () => ref
-                        .read(episodesProvider.notifier)
-                        .update((state) => state = data),
-                  );
-                } else {
-                  Future.delayed(
-                    Duration.zero,
-                    () {
-                      final totalEpisodes = episodes.episodes;
-                      totalEpisodes.addAll(data.episodes);
-                      data.episodes = totalEpisodes;
-                      ref
-                          .read(episodesProvider.notifier)
-                          .update((state) => state = data);
-                    },
-                  );
-                }
-                return const SizedBox();
-              },
-              error: (error, stackTrace) => Container(),
-              loading: () => const SizedCustomProgressIndicator2(),
-            ),
+        ),
       ],
     );
   }

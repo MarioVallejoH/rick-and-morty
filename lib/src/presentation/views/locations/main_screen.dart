@@ -18,8 +18,8 @@ class LocationsScreen extends ConsumerWidget {
       body: ColumnWithPadding(
         children: [
           CustomAppBar2(
-            title: appLocalizations?.episodesList,
-            subtitle: appLocalizations?.episodesListText,
+            title: appLocalizations?.locationsList,
+            subtitle: appLocalizations?.locationsListText,
             includeBackArrow: false,
             includeBottomSpacer: true,
           ),

@@ -6,6 +6,7 @@ import 'package:rick_and_morty_app/src/domain/entities/episodes.dart';
 ///
 /// Calls episodes repository to fetch Episodes data
 final episodesProvider = StateProvider.autoDispose<Episodes?>((ref) {
+  ref.watch(episodesFilterProvider);
   return null;
 });
 
@@ -13,6 +14,7 @@ final episodesProvider = StateProvider.autoDispose<Episodes?>((ref) {
 ///
 /// Save current episodes page
 final episodesPageProvider = StateProvider.autoDispose<int>((ref) {
+  ref.watch(episodesFilterProvider);
   return 1;
 });
 
@@ -20,9 +22,10 @@ final episodesPageProvider = StateProvider.autoDispose<int>((ref) {
 ///
 /// Calls episodes repository to fetch Episodes data
 final episodesFetchProvider = FutureProvider.autoDispose<Episodes>((ref) {
-  return ref
-      .read(episodesRepositoryProvider)
-      .get(page: ref.watch(episodesPageProvider));
+  return ref.read(episodesRepositoryProvider).get(
+        page: ref.watch(episodesPageProvider),
+        filter: ref.watch(episodesFilterProvider),
+      );
 });
 
 /// Episodes data provider
@@ -39,4 +42,12 @@ final episodeFetchProvider = FutureProvider.autoDispose<Episode?>((ref) {
 /// Save current episode selected
 final episodeSelectedProvider = StateProvider<Episode?>((ref) {
   return null;
+});
+
+/// episodes current filters
+///
+/// Save current filters on episodes screen
+final episodesFilterProvider =
+    StateProvider.autoDispose<Map<String, dynamic>>((ref) {
+  return {};
 });

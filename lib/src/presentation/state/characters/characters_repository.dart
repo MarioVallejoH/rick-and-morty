@@ -6,6 +6,7 @@ import 'package:rick_and_morty_app/src/domain/entities/characters.dart';
 ///
 /// Calls characters repository to fetch characters data
 final charactersProvider = StateProvider.autoDispose<Characters?>((ref) {
+  ref.watch(charactersFilterProvider);
   return null;
 });
 
@@ -13,16 +14,26 @@ final charactersProvider = StateProvider.autoDispose<Characters?>((ref) {
 ///
 /// Save current characters page
 final charactersPageProvider = StateProvider.autoDispose<int>((ref) {
+  ref.watch(charactersFilterProvider);
   return 1;
+});
+
+/// characters current filters
+///
+/// Save current filters on characters screen
+final charactersFilterProvider =
+    StateProvider.autoDispose<Map<String, dynamic>>((ref) {
+  return {};
 });
 
 /// characters data provider
 ///
 /// Calls characters repository to fetch characters data
 final charactersFetchProvider = FutureProvider.autoDispose<Characters>((ref) {
-  return ref
-      .read(characterRepositoryProvider)
-      .get(page: ref.watch(charactersPageProvider));
+  return ref.read(characterRepositoryProvider).get(
+        page: ref.watch(charactersPageProvider),
+        filter: ref.watch(charactersFilterProvider),
+      );
 });
 
 /// characters data provider

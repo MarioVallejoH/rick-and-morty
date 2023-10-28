@@ -21,6 +21,8 @@ class _CharactersBodyState extends ConsumerState<CharactersBody> {
   /// ListView ScrollController
   final _controller = ScrollController();
 
+  final _searchController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -53,42 +55,66 @@ class _CharactersBodyState extends ConsumerState<CharactersBody> {
 
   @override
   Widget build(BuildContext context) {
-    final characters = ref.watch(charactersProvider);
-    return Stack(
-      alignment: Alignment.bottomCenter,
+    return Column(
       children: [
-        if (characters != null)
-          CharactersList(
-            characters: characters.characters,
-            controller: _controller,
+        SearchField(
+          controller: _searchController,
+          onChanged: (String value) {
+            ref.read(charactersFilterProvider.notifier).update(
+                  (state) => state = {
+                    'name': value,
+                  },
+                );
+          },
+        ),
+        const SafeSpacer(),
+        Expanded(
+          child: Builder(
+            builder: (context) {
+              final characters = ref.watch(charactersProvider);
+              return Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  if (characters != null)
+                    Expanded(
+                      child: CharactersList(
+                        key: UniqueKey(),
+                        characters: characters.characters,
+                        controller: _controller,
+                      ),
+                    ),
+                  ref.watch(charactersFetchProvider).when(
+                        data: (data) {
+                          if (characters == null) {
+                            Future.delayed(
+                              Duration.zero,
+                              () => ref
+                                  .read(charactersProvider.notifier)
+                                  .update((state) => state = data),
+                            );
+                          } else {
+                            Future.delayed(
+                              Duration.zero,
+                              () {
+                                final totalCharacters = characters.characters;
+                                totalCharacters.addAll(data.characters);
+                                data.characters = totalCharacters;
+                                ref
+                                    .read(charactersProvider.notifier)
+                                    .update((state) => state = data);
+                              },
+                            );
+                          }
+                          return const SizedBox();
+                        },
+                        error: (error, stackTrace) => Container(),
+                        loading: () => const SizedCustomProgressIndicator2(),
+                      ),
+                ],
+              );
+            },
           ),
-        ref.watch(charactersFetchProvider).when(
-              data: (data) {
-                if (characters == null) {
-                  Future.delayed(
-                    Duration.zero,
-                    () => ref
-                        .read(charactersProvider.notifier)
-                        .update((state) => state = data),
-                  );
-                } else {
-                  Future.delayed(
-                    Duration.zero,
-                    () {
-                      final totalCharacters = characters.characters;
-                      totalCharacters.addAll(data.characters);
-                      data.characters = totalCharacters;
-                      ref
-                          .read(charactersProvider.notifier)
-                          .update((state) => state = data);
-                    },
-                  );
-                }
-                return const SizedBox();
-              },
-              error: (error, stackTrace) => Container(),
-              loading: () => const SizedCustomProgressIndicator2(),
-            ),
+        ),
       ],
     );
   }

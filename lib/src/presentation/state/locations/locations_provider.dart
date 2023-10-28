@@ -6,6 +6,7 @@ import 'package:rick_and_morty_app/src/domain/entities/locations.dart';
 ///
 /// Calls locations repository to fetch Locations data
 final locationsProvider = StateProvider.autoDispose<Locations?>((ref) {
+  ref.watch(locationsFilterProvider);
   return null;
 });
 
@@ -13,6 +14,7 @@ final locationsProvider = StateProvider.autoDispose<Locations?>((ref) {
 ///
 /// Save current locations page
 final locationsPageProvider = StateProvider.autoDispose<int>((ref) {
+  ref.watch(locationsFilterProvider);
   return 1;
 });
 
@@ -20,9 +22,10 @@ final locationsPageProvider = StateProvider.autoDispose<int>((ref) {
 ///
 /// Calls locations repository to fetch Locations data
 final locationsFetchProvider = FutureProvider.autoDispose<Locations>((ref) {
-  return ref
-      .read(locationsRepositoryProvider)
-      .get(page: ref.watch(locationsPageProvider));
+  return ref.read(locationsRepositoryProvider).get(
+        page: ref.watch(locationsPageProvider),
+        filter: ref.watch(locationsFilterProvider),
+      );
 });
 
 /// Locations data provider
@@ -39,4 +42,12 @@ final locationFetchProvider = FutureProvider.autoDispose<Location?>((ref) {
 /// Save current location selected
 final locationSelectedProvider = StateProvider<Location?>((ref) {
   return null;
+});
+
+/// locations current filters
+///
+/// Save current filters on locations screen
+final locationsFilterProvider =
+    StateProvider.autoDispose<Map<String, dynamic>>((ref) {
+  return {};
 });

@@ -53,42 +53,63 @@ class _LocationsBodyState extends ConsumerState<LocationsBody> {
 
   @override
   Widget build(BuildContext context) {
-    final locations = ref.watch(locationsProvider);
-    return Stack(
-      alignment: Alignment.bottomCenter,
+    return Column(
       children: [
-        if (locations != null)
-          LocationsList(
-            locations: locations.locations,
-            controller: _controller,
+        SearchField(
+          onChanged: (String value) {
+            ref.read(locationsFilterProvider.notifier).update(
+                  (state) => state = {
+                    'name': value,
+                  },
+                );
+          },
+        ),
+        const SafeSpacer(),
+        Expanded(
+          child: Builder(
+            builder: (context) {
+              final locations = ref.watch(locationsProvider);
+
+              return Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  if (locations != null)
+                    LocationsList(
+                      locations: locations.locations,
+                      controller: _controller,
+                    ),
+                  ref.watch(locationsFetchProvider).when(
+                        data: (data) {
+                          if (locations == null) {
+                            Future.delayed(
+                              Duration.zero,
+                              () => ref
+                                  .read(locationsProvider.notifier)
+                                  .update((state) => state = data),
+                            );
+                          } else {
+                            Future.delayed(
+                              Duration.zero,
+                              () {
+                                final totalLocations = locations.locations;
+                                totalLocations.addAll(data.locations);
+                                data.locations = totalLocations;
+                                ref
+                                    .read(locationsProvider.notifier)
+                                    .update((state) => state = data);
+                              },
+                            );
+                          }
+                          return const SizedBox();
+                        },
+                        error: (error, stackTrace) => Container(),
+                        loading: () => const SizedCustomProgressIndicator2(),
+                      ),
+                ],
+              );
+            },
           ),
-        ref.watch(locationsFetchProvider).when(
-              data: (data) {
-                if (locations == null) {
-                  Future.delayed(
-                    Duration.zero,
-                    () => ref
-                        .read(locationsProvider.notifier)
-                        .update((state) => state = data),
-                  );
-                } else {
-                  Future.delayed(
-                    Duration.zero,
-                    () {
-                      final totalLocations = locations.locations;
-                      totalLocations.addAll(data.locations);
-                      data.locations = totalLocations;
-                      ref
-                          .read(locationsProvider.notifier)
-                          .update((state) => state = data);
-                    },
-                  );
-                }
-                return const SizedBox();
-              },
-              error: (error, stackTrace) => Container(),
-              loading: () => const SizedCustomProgressIndicator2(),
-            ),
+        ),
       ],
     );
   }

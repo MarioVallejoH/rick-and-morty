@@ -6,4 +6,5 @@ export 'package:rick_and_morty_app/src/presentation/widgets/custom_scaffold.dart
 export 'package:rick_and_morty_app/src/presentation/widgets/labeled_text.dart';
 export 'package:rick_and_morty_app/src/presentation/widgets/loading.dart';
 export 'package:rick_and_morty_app/src/presentation/widgets/scroll_column_expandable.dart';
+export 'package:rick_and_morty_app/src/presentation/widgets/search_field.dart';
 export 'package:rick_and_morty_app/src/presentation/widgets/spacers.dart';

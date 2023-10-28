@@ -114,62 +114,23 @@ ThemeData globalTheme() {
     );
   }
 
-  DropdownMenuThemeData dropDownMenuThemeData(DropdownMenuThemeData ddTheme) {
-    return ddTheme.copyWith(
-      menuStyle: MenuStyle(
-        padding: const MaterialStatePropertyAll<EdgeInsets>(
-          EdgeInsets.symmetric(
-            horizontal: 20,
-          ),
-        ),
-        backgroundColor:
-            const MaterialStatePropertyAll<Color>(AppColors.secondary_200),
-        shape: MaterialStatePropertyAll<OutlinedBorder>(
-          RoundedRectangleBorder(
-            side: const BorderSide(
-              width: 1,
-              color: AppColors.primary_300,
-            ),
-            borderRadius: BorderRadius.circular(
-              AppSizes.genericBorderRadius,
-            ),
-          ),
-        ),
-        side: const MaterialStatePropertyAll<BorderSide>(
-          BorderSide(
-            width: 1,
-            color: AppColors.primary_300,
-          ),
-        ),
-      ),
-    );
-  }
-
-  SliderThemeData sliderThemeData(SliderThemeData sliderThemeData) {
-    return sliderThemeData.copyWith(
-      activeTrackColor: const Color.fromRGBO(255, 255, 255, 1),
-      thumbColor: const Color.fromRGBO(72, 104, 126, 1),
-      inactiveTrackColor: const Color.fromRGBO(72, 104, 126, 1),
-    );
-  }
-
   InputDecorationTheme inputDecorationTheme(InputDecorationTheme theme) {
     final border = UnderlineInputBorder(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(AppSizes.genericBorderRadius),
       borderSide: const BorderSide(
         color: AppColors.primary_300,
         width: 0.3,
       ),
     );
     final focusedBorder = UnderlineInputBorder(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(AppSizes.genericBorderRadius),
       borderSide: const BorderSide(
         color: AppColors.primary_300,
         width: 0.3,
       ),
     );
     final errorBorder = UnderlineInputBorder(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(AppSizes.genericBorderRadius),
       borderSide: const BorderSide(
         color: Color(0xffaa3030),
         width: 1,
@@ -178,6 +139,8 @@ ThemeData globalTheme() {
     const outlineBorder = BorderSide.none;
     return theme.copyWith(
       border: border,
+      filled: true,
+      fillColor: AppColors.secondary_50,
       focusedBorder: focusedBorder,
       enabledBorder: border,
       errorBorder: errorBorder,
@@ -190,30 +153,22 @@ ThemeData globalTheme() {
       labelStyle: theme.labelStyle?.copyWith(
         fontWeight: FontWeight.w500,
         fontSize: 16.0,
-        color: Colors.white,
+        color: AppColors.secondary_500,
       ),
       floatingLabelStyle: theme.labelStyle?.copyWith(
         fontWeight: FontWeight.w500,
         fontSize: 16.0,
-        color: Colors.white,
+        color: AppColors.secondary_500,
       ),
       errorStyle: theme.labelStyle?.copyWith(
         fontWeight: FontWeight.w500,
         fontSize: 16.0,
         color: AppColors.danger_400,
       ),
-      hintStyle: theme.labelStyle?.copyWith(
+      hintStyle: theme.hintStyle?.copyWith(
         fontWeight: FontWeight.w500,
         fontSize: 16.0,
-        color: Colors.white,
-      ),
-    );
-  }
-
-  CheckboxThemeData checkboxThemeData(CheckboxThemeData checkboxThemeData) {
-    return checkboxThemeData.copyWith(
-      fillColor: MaterialStateProperty.all<Color>(
-        const Color(0xff176AFC),
+        color: AppColors.secondary_500,
       ),
     );
   }
@@ -250,16 +205,13 @@ ThemeData globalTheme() {
   return theme.copyWith(
     primaryColor: AppColors.primary_400,
     shadowColor: Colors.grey,
-    sliderTheme: sliderThemeData(theme.sliderTheme),
     scaffoldBackgroundColor: AppColors.backgroundVariant,
     textTheme: globalTextTheme(
       GoogleFonts.latoTextTheme(
         theme.textTheme,
       ),
     ),
-    dropdownMenuTheme: dropDownMenuThemeData(theme.dropdownMenuTheme),
     buttonTheme: buttonThemeData(theme.buttonTheme),
-    checkboxTheme: checkboxThemeData(theme.checkboxTheme),
     inputDecorationTheme: inputDecorationTheme(theme.inputDecorationTheme),
     appBarTheme: const AppBarTheme(
       centerTitle: false,
