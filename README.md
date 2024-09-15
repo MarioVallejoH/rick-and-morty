@@ -2,6 +2,13 @@
 
 A flutter project that implements Rick and Morty API.
 
+<p align="center">
+  <img src="assets/doc/screens_1.png" width="600" title="App Folder structure">
+</p>
+<p align="center">
+  <img src="assets/doc/screens_2.png" width="600" title="App Folder structure">
+</p>
+
 ## Make it run
 
 To make it run you need to configure `HOST` environment var on compiling app, you can do it on terminal or in `.vscode/launch.json`. You need to set that file with this content:
@@ -69,6 +76,10 @@ Riverpod is used to manage app state, using providers to get and update widgets 
 ## Multi-language support
 
 App supports using and selecting two languages `EN and ES`. You can add any other language just adding a file on ``lib/l10n/app_[NewLang].arb` and adding the respective traduction.
+
+<p align="center">
+  <img src="assets/doc/settings.png" width="200" title="App Folder structure">
+</p>
 
 ## APP folder structure
 <p align="center">
